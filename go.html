@@ -156,33 +156,4 @@
                 try {
                     // Tầng 1: Giả lập hành động click chuẩn với no-referrer
                     var a = document.createElement("a");
-                    a.href = url;
-                    a.rel = "noreferrer noopener nofollow";
-                    document.body.appendChild(a);
-                    a.click();
-                } catch (e) {
-                    // Tầng 2: Dự phòng bằng location.replace
-                    try {
-                        window.location.replace(url);
-                    } catch (err) {
-                        // Tầng 3: Ép chuyển trực tiếp
-                        window.location.href = url;
-                    }
-                }
-            }
-
-            // Kích hoạt chuyển trang sau khoảng trễ ngắn
-            setTimeout(function() {
-                safeRedirect(LINK_CHINH);
-            }, THOI_GIAN_CHO);
-
-            // Nếu sau 4 giây vẫn kẹt ở trang này (do mạng khách chặn tên miền đích), hiện thông báo nhắc bấm tay/bật 1.1.1.1
-            setTimeout(function() {
-                if (statusMsg) {
-                    statusMsg.innerHTML = "<b style='color:#d97706'>Đường truyền mạng của bạn đang phản hồi chậm. Vui lòng nhấn nút bên dưới hoặc bật 1.1.1.1!</b>";
-                }
-            }, 4000);
-        })();
-    </script>
-</body>
-</html>
+                    
